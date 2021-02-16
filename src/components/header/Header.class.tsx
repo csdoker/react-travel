@@ -19,6 +19,14 @@ class HeaderComponent extends Component<RouteComponentProps, State> {
     }
   }
 
+  menuClickHandler = (e) => {
+    const action = {
+      type: 'change_language',
+      payload: e.key
+    }
+    store.dispatch(action)
+  }
+
   render () {
     const { history } = this.props
     return (
@@ -29,7 +37,7 @@ class HeaderComponent extends Component<RouteComponentProps, State> {
             <Dropdown.Button
               style={{ marginLeft: 15 }}
               overlay={
-                <Menu>
+                <Menu onClick={this.menuClickHandler}>
                   {
                     this.state.languageList.map(l => {
                       return <Menu.Item key={l.code}>{l.name}</Menu.Item>

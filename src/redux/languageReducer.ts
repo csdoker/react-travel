@@ -1,7 +1,7 @@
 export interface LanguageState {
-  language: 'en' | 'zh',
+  language: 'en' | 'zh'
   languageList: {
-    name: string,
+    name: string
     code: string
   }[]
 }
@@ -16,10 +16,16 @@ const defaultState: LanguageState = {
     {
       name: 'English',
       code: 'en'
-    },
+    }
   ]
 }
 
-export default (state = defaultState, action) => {
+const languageReducer = (state = defaultState, action) => {
+  if (action.type === 'change_language') {
+    const newState = { ...state, language: action.payload }
+    return newState
+  }
   return state
 }
+
+export default languageReducer

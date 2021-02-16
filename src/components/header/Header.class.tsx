@@ -17,14 +17,34 @@ class HeaderComponent extends Component<RouteComponentProps, State> {
       language: storeState.language,
       languageList: storeState.languageList
     }
+    store.subscribe(this.handleStoreChange)
+  }
+
+  handleStoreChange = () => {
+    const storeState = store.getState()
+    this.setState({
+      language: storeState.language,
+      languageList: storeState.languageList
+    })
   }
 
   menuClickHandler = (e) => {
-    const action = {
-      type: 'change_language',
-      payload: e.key
+    if (e.key === 'new') {
+      const action = {
+        type: 'add_language',
+        payload: {
+          code: 'new_lang',
+          name: '新语言'
+        }
+      }
+      store.dispatch(action)
+    } else {
+      const action = {
+        type: 'change_language',
+        payload: e.key
+      }
+      store.dispatch(action)
     }
-    store.dispatch(action)
   }
 
   render () {
@@ -43,6 +63,7 @@ class HeaderComponent extends Component<RouteComponentProps, State> {
                       return <Menu.Item key={l.code}>{l.name}</Menu.Item>
                     })
                   }
+                  <Menu.Item key={'new'}>添加新语言</Menu.Item>
                 </Menu>
               }
               icon={<GlobalOutlined />}

@@ -51,3 +51,4 @@ export const getRecommendProductsListActionCreator = () : ThunkAction<void, Root
     dispatch(fetchRecommendProductsFailActionCreator(error.message))
   }
 }
+// const middleware = (store) => (next) => (action) => {}

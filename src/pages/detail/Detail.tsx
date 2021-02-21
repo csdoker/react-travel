@@ -2,8 +2,19 @@ import React, { useState, useEffect } from 'react'
 import styles from './Detail.module.css'
 import { RouteComponentProps, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { Spin, Row, Col, DatePicker, Space } from 'antd'
-import { Header, Footer, ProductIntro } from '../../components'
+import {
+  Spin,
+  Row,
+  Col,
+  DatePicker,
+  Space,
+  Divider,
+  Typography,
+  Anchor,
+  Menu
+} from 'antd'
+import { Header, Footer, ProductIntro, ProductComments } from '../../components'
+import { commentMockData } from './mockup'
 
 const { RangePicker } = DatePicker
 
@@ -11,17 +22,19 @@ interface MatchParams {
   touristRouteId: string
 }
 
-export const Detail: React.FC<RouteComponentProps<MatchParams>> = (props) => {
+export const Detail: React.FC<RouteComponentProps<MatchParams>> = props => {
   const { touristRouteId } = useParams<MatchParams>()
   const [loading, setLoading] = useState<boolean>(true)
   const [product, setProduct] = useState<any>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const fetchData = async() => {
+    const fetchData = async () => {
       setLoading(true)
       try {
-        const { data } = await axios.get(`http://123.56.149.216:8080/api/touristRoutes/${touristRouteId}`)
+        const { data } = await axios.get(
+          `http://123.56.149.216:8080/api/touristRoutes/${touristRouteId}`
+        )
         setProduct(data)
         setLoading(false)
       } catch (error) {
@@ -31,13 +44,18 @@ export const Detail: React.FC<RouteComponentProps<MatchParams>> = (props) => {
     }
   }, [])
   if (loading) {
-    return <Spin size='large' style={{
-      marginTop: 200,
-      marginBottom: 200,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      width: '100%'
-    }} />
+    return (
+      <Spin
+        size='large'
+        style={{
+          marginTop: 200,
+          marginBottom: 200,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          width: '100%'
+        }}
+      />
+    )
   }
   if (error) {
     return <div>网站出错：{error}</div>
@@ -57,19 +75,65 @@ export const Detail: React.FC<RouteComponentProps<MatchParams>> = (props) => {
                 points={product.points}
                 discount={product.price}
                 rating={product.rating}
-                pictures={product.touristRoutePictures.map((p) => p.url)}
+                pictures={product.touristRoutePictures.map(p => p.url)}
               />
             </Col>
             <Col span={11}>
-              <RangePicker open style={{marginTop: 20}} />
+              <RangePicker open style={{ marginTop: 20 }} />
             </Col>
           </Row>
         </div>
-        <div className={styles['product-detail-anchor']}></div>
-        <div className={styles['product-detail-container']} id='feature'></div>
-        <div className={styles['product-detail-container']} id='fees'></div>
-        <div id='notes' className={styles['product-detail-container']}></div>
-        <div id='comments' className={styles['product-detail-container']}></div>
+        <Anchor className={styles['product-detail-anchor']}>
+          <Menu mode='horizontal'>
+            <Menu.Item key='1'>
+              <Anchor.Link href='#feature' title='产品特色'></Anchor.Link>
+            </Menu.Item>
+            <Menu.Item key='3'>
+              <Anchor.Link href='#fees' title='费用'></Anchor.Link>
+            </Menu.Item>
+            <Menu.Item key='4'>
+              <Anchor.Link href='#notes' title='预订须知'></Anchor.Link>
+            </Menu.Item>
+            <Menu.Item key='5'>
+              <Anchor.Link href='#comments' title='用户评价'></Anchor.Link>
+            </Menu.Item>
+          </Menu>
+        </Anchor>
+        <div className={styles['product-detail-container']} id='feature'>
+          <Divider orientation={'center'}>
+            <Typography.Title level={3}>产品特色</Typography.Title>
+          </Divider>
+          <div
+            dangerouslySetInnerHTML={{ __html: product.features }}
+            style={{ margin: 50 }}
+          ></div>
+        </div>
+        <div className={styles['product-detail-container']} id='fees'>
+          <Divider orientation={'center'}>
+            <Typography.Title level={3}>费用</Typography.Title>
+          </Divider>
+          <div
+            dangerouslySetInnerHTML={{ __html: product.fees }}
+            style={{ margin: 50 }}
+          ></div>
+        </div>
+        <div id='notes' className={styles['product-detail-container']}>
+          <Divider orientation={'center'}>
+            <Typography.Title level={3}>预定须知</Typography.Title>
+          </Divider>
+          <div
+            dangerouslySetInnerHTML={{ __html: product.notes }}
+            style={{ margin: 50 }}
+          ></div>
+        </div>
+        <div id='comments' className={styles['product-detail-container']}>
+          <Divider orientation={'center'}>
+            <Typography.Title level={3}>用户评价</Typography.Title>
+          </Divider>
+          <div style={{ margin: 40 }}>
+            <ProductComments data={commentMockData} />
+          </div>
+        </div>
       </div>
       <Footer />
     </>

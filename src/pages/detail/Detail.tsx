@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styles from './Detail.module.css'
 import { RouteComponentProps, useParams } from 'react-router-dom'
-import axios from 'axios'
 import {
   Spin,
   Row,
@@ -15,7 +14,7 @@ import {
 } from 'antd'
 import { Header, Footer, ProductIntro, ProductComments } from '../../components'
 import { commentMockData } from './mockup'
-import { productDetailSlice } from '../../redux/productDetail/slice'
+import { productDetailSlice, getProductDetail } from '../../redux/productDetail/slice'
 import { useSelector } from '../../redux/hooks'
 import { useDispatch } from 'react-redux'
 
@@ -36,18 +35,7 @@ export const Detail: React.FC<RouteComponentProps<MatchParams>> = props => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const fetchData = async () => {
-      dispatch(productDetailSlice.actions.fetchStart())
-      try {
-        const { data } = await axios.get(
-          `http://123.56.149.216:8080/api/touristRoutes/${touristRouteId}`
-        )
-        dispatch(productDetailSlice.actions.fetchSuccess(data))
-      } catch (error) {
-        dispatch(productDetailSlice.actions.fetchFail(error.message))
-      }
-    }
-    fetchData()
+    dispatch(getProductDetail(touristRouteId))
   }, [])
   if (loading) {
     return (

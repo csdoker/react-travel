@@ -1,6 +1,11 @@
 import React from 'react'
 import styles from './SignIn.module.css'
+import { UserLayout } from '../../layouts/userLayout'
 
 export const SignIn: React.FC = () => {
-  return <h1>signin</h1>
+  return (
+    <UserLayout>
+      <h1>登录</h1>
+    </UserLayout>
+  )
 }

@@ -6,6 +6,7 @@ import { Spin } from 'antd'
 import { searchProduct } from '../../redux/productSearch/slice'
 import { useSelector } from '../../redux/hooks'
 import { useDispatch } from 'react-redux'
+import { MainLayout } from '../../layouts/mainLayout'
 
 interface MatchParams {
   keywords: string
@@ -21,39 +22,44 @@ export const Search: React.FC = () => {
   const location = useLocation()
 
   useEffect(() => {
-    dispatch(searchProduct({nextPage: 1, pageSize: 10, keywords}))
+    dispatch(searchProduct({ nextPage: 1, pageSize: 10, keywords }))
   }, [location])
-  
+
   const onPageChange = (nextPage, pageSize) => {
-    dispatch(searchProduct({nextPage, pageSize, keywords}))
+    dispatch(searchProduct({ nextPage, pageSize, keywords }))
   }
 
   if (loading) {
-    return <Spin size='large' style={{
-      marginTop: 200,
-      marginBottom: 200,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      width: '100%'
-    }} />
+    return (
+      <Spin
+        size='large'
+        style={{
+          marginTop: 200,
+          marginBottom: 200,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          width: '100%'
+        }}
+      />
+    )
   }
-  
+
   if (error) {
     return <div>网站出错：{error}</div>
   }
 
   return (
-    <>
-      <Header />
-      <div className={styles['page-content']}>
-        <div className={styles['product-list-container']}>
-          <FilterArea />
-        </div>
-        <div className={styles['product-list-container']}>
-          <ProductList data={productList} paging={pagination} onPageChange={onPageChange} />
-        </div>
+    <MainLayout>
+      <div className={styles['product-list-container']}>
+        <FilterArea />
       </div>
-      <Footer />
-    </>
+      <div className={styles['product-list-container']}>
+        <ProductList
+          data={productList}
+          paging={pagination}
+          onPageChange={onPageChange}
+        />
+      </div>
+    </MainLayout>
   )
 }

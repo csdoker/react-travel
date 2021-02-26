@@ -7,6 +7,7 @@ import { productDetailSlice } from './productDetail/slice'
 import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import { productSearchSlice } from './productSearch/slice'
 import { userSlice } from './user/slice'
+import { shoppingCartSlice } from './shoppingCart/slice'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   recommendProducts: recommendProductsReducer,
   productDetail: productDetailSlice.reducer,
   productSearch: productSearchSlice.reducer,
-  user: userSlice.reducer
+  user: userSlice.reducer,
+  shoppingCart: shoppingCartSlice.reducer
 })
 
 const persistdReducer = persistReducer(

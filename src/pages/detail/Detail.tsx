@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { RouteComponentProps, useParams } from "react-router-dom";
 import axios from "axios";
 import { Spin, Row, Col, Divider, Typography, Anchor, Menu } from "antd";
-import styles from "./DetailPage.module.css";
+import styles from "./Detail.module.css";
 import {
   Header,
   Footer,

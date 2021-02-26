@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { clearShoppingCartItem, checkout } from "../../redux/shoppingCart/slice";
 import { useHistory } from "react-router-dom";
 
-export const ShoppingCartPage: React.FC = (props) => {
+export const ShoppingCart: React.FC = (props) => {
 
   const loading = useSelector(s=>s.shoppingCart.loading)
   const shoppingCartItems = useSelector(s => s.shoppingCart.items)

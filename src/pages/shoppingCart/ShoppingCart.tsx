@@ -7,7 +7,7 @@ import { useSelector } from "../../redux/hooks";
 import { useDispatch } from "react-redux";
 import { clearShoppingCartItem } from "../../redux/shoppingCart/slice";
 
-export const ShoppingCartPage: React.FC = (props) => {
+export const ShoppingCart: React.FC = (props) => {
   const loading = useSelector((s) => s.shoppingCart.loading);
   const shoppingCartItems = useSelector((s) => s.shoppingCart.items);
   const jwt = useSelector((s) => s.user.token) as string;

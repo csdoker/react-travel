@@ -27,7 +27,7 @@ interface MatchParams {
   touristRouteId: string;
 }
 
-export const DetailPage: React.FC<RouteComponentProps<MatchParams>> = () => {
+export const Detail: React.FC<RouteComponentProps<MatchParams>> = () => {
   const { touristRouteId } = useParams<MatchParams>();
   // const [loading, setLoading] = useState<boolean>(true);
   // const [product, setProduct] = useState<any>(null);

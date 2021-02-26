@@ -1,7 +1,7 @@
 import React, { createElement, useEffect } from 'react'
 import styles from './App.module.css'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { Home, SignIn, Register, Detail, Search, ShoppingCart } from './pages'
+import { Home, SignIn, Register, Detail, Search, ShoppingCart, PlaceOrder } from './pages'
 import { Redirect } from 'react-router-dom'
 import { useSelector } from './redux/hooks'
 import { useDispatch } from 'react-redux'
@@ -36,6 +36,7 @@ function App () {
           <Route path='/detail/:touristRouteId' component={Detail} />
           <Route path='/search/:keywords?' component={Search} />
           <PrivateRoute isAuthenticated={jwt !== null} path='/shoppingCart' component={ShoppingCart} />
+          <PrivateRoute isAuthenticated={jwt !== null} path='/placeOrder' component={PlaceOrder} />
           <Route render={() => <h1>404 not found</h1>} />
         </Switch>
       </BrowserRouter>
